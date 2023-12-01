@@ -21,17 +21,26 @@ func p1(input string) string {
 }
 
 func p2(input string) string {
-	return sumCalibrationValues(input, getDigit, getDigitString)
+	combinedGetDigit := func(l string) *int {
+		d := getDigit(l)
+		if d != nil {
+			return d
+		}
+
+		return getDigitString(l)
+	}
+
+	return sumCalibrationValues(input, combinedGetDigit)
 }
 
-func sumCalibrationValues(calibrationsDocument string, getDigitFuncs ...func(string) *int) string {
+func sumCalibrationValues(calibrationsDocument string, getDigitFuncs func(string) *int) string {
 	sum := 0
 	for _, l := range strings.Split(calibrationsDocument, "\n") {
 		if l == "" {
 			continue
 		}
 
-		digits := getDigits(l, getDigitFuncs...)
+		digits := getDigits(l, getDigitFuncs)
 
 		sum += digits[0]*10 + digits[len(digits)-1]
 	}
@@ -39,20 +48,18 @@ func sumCalibrationValues(calibrationsDocument string, getDigitFuncs ...func(str
 	return fmt.Sprintf("%d", sum)
 }
 
-func getDigits(l string, getDigitFuncs ...func(string) *int) []int {
+func getDigits(l string, getDigitFromStart func(string) *int) []int {
 	i := 0
 	digits := []int{}
 	for i < len(l) {
-		for _, f := range getDigitFuncs {
-			d := f(l[i:])
-			if d != nil {
-				digits = append(digits, *d)
-				break
-			}
+		d := getDigitFromStart(l[i:])
+		if d != nil {
+			digits = append(digits, *d)
 		}
 
 		i++
 	}
+
 	return digits
 }
 
