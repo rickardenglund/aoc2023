@@ -34,40 +34,14 @@ func p1(input string, cs CubeSet) string {
 	return fmt.Sprintf("%d", sum)
 }
 func p2(input string) string {
-	return ""
-}
-
-type CubeSet map[string]int
-
-func (s CubeSet) count() int {
+	games := getGames(input)
 	total := 0
-	for _, n := range s {
-		total += n
+	for _, g := range games {
+		startSet := g.smallestStart()
+		total += startSet.Power()
 	}
 
-	return total
-}
-
-type game struct {
-	id     int
-	rounds []CubeSet
-}
-
-func (g game) possibleWith(all CubeSet) bool {
-	for _, r := range g.rounds {
-		if r.count() > all.count() {
-			return false
-		}
-
-		for c, n := range r {
-			if n > all[c] {
-				return false
-
-			}
-		}
-	}
-
-	return true
+	return fmt.Sprintf("%d", total)
 }
 
 func getGames(input string) []game {
