@@ -4,7 +4,6 @@ a1b2c3d4e5f
 treb7uchet
 """
 
-
 input_2 = """two1nine
 eightwothree
 abcone2threexyz
@@ -13,6 +12,7 @@ xtwone3four
 zoneight234
 7pqrstsixteen
 """
+
 
 def main():
     print("p1", solve(input, read_row))
@@ -23,12 +23,13 @@ def solve(in_data, get_calibration_values):
     lines = in_data.split("\n")
 
     cvs = [
-            int(get_calibration_values(x)) 
-            for x in lines 
-            if x != ""
-            ]
+        int(get_calibration_values(x))
+        for x in lines
+        if x != ""
+    ]
 
-    return  sum(cvs)
+    return sum(cvs)
+
 
 def read_row(l):
     res = ""
@@ -38,6 +39,7 @@ def read_row(l):
 
     assert len(res) > 0, "failed on line, " + l
     return res[0] + res[-1]
+
 
 def read_row_2(l):
     res = ""
@@ -51,7 +53,6 @@ def read_row_2(l):
     return res[0] + res[-1]
 
 
-    
 def get_number(r):
     for k in numbers:
         if r.startswith(k):
@@ -60,17 +61,16 @@ def get_number(r):
 
 
 numbers = {
-        "one": "1",
-        "two": "2",
-        "three": "3",
-        "four": "4",
-        "five": "5",
-        "six": "6",
-        "seven": "7",
-        "eight":"8",
-        "nine": "9",
-        "zero":"0"
-        }
-
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+    "zero": "0"
+}
 
 main()
